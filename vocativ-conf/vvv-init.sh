@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 echo "Commencing Vocativ Base Setup as user: $USER"
 
 cd /srv/www/
@@ -48,33 +50,7 @@ fi
 echo "Creating .dev.json if it doesn't exist already"
 if [ ! -f vocativ/.dev.json ]; then
     echo "Creating .dev.json file"
-    echo "{
-   \"db\": {
-     \"host\": \"localhost\",
-     \"port\": 3306,
-     \"name\": \"vocativ\",
-     \"user\": \"root\",
-     \"pass\": \"root\"
-   },
-   \"site\": {
-     \"url\": \"http://vocativ.dev\",
-     \"admin_hostname\" : \"cms.vocativ.dev\"
-   },
-   \"wordpress\": {
-     \"debug\": true,
-     \"constants\": {
-       \"COOKIE_DOMAIN\": \".vocativ.dev\",
-       \"SCRIPT_DEBUG\": true,
-       \"VOCATIV_ACCOUNTS_FACEBOOK_APP_ID\": \"479334422145013\",
-       \"VOCATIV_ACCOUNTS_FACEBOOK_APP_SECRET\": \"a61733d814cfbc8cc951ac65411ff1c6\",
-       \"WP_POST_REVISIONS\": 5,
-       \"WP_DEBUG\": true,
-       \"WP_DEBUG_LOG\": true,
-       \"WP_MEMORY_LIMIT\": \"2048M\",
-       \"PL_HOST\" : \"localhost:8000\"
-     }
-   }
- }" > vocativ/.dev.json
+    cp $SCRIPT_DIR/dev.json vocativ/.dev.json
 else
     echo ".dev.json already exists. Skipping..."
 fi
