@@ -56,14 +56,16 @@ else
 fi
 
 PHP_INSTALLED=$(phpbrew  list | grep '5.6' | wc -l)
-
 if [ $PHP_INSTALLED == 0 ]; then
     echo "PHP 5.6 not found. Installing..."
     phpbrew install 5.6
 fi
 
 echo "Setting PHPBrew to use 5.6"
-phpbrew use $(phpbrew list | grep -v system | grep '5.6' | head -n 1)
+
+PHP_VERSION=$(phpbrew list | grep -v system | grep '5.6' | head -n 1)
+phpbrew switch $PHP_VERSION 
+phpbrew use $PHP_VERSION 
 
 echo "Running composer and submodule init in Vocativ directory"
 cd vocativ
